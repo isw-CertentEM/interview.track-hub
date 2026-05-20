@@ -50,4 +50,14 @@ state onto `shipments`.
 `ShipmentReportService.GetSummaryForMerchant` is the read path; it backs
 the merchant dashboard.
 
+## Building
+
+```
+dotnet build TrackHub.sln
+```
+
+Targets .NET 8. The application needs an Oracle instance to run end to end
+(see `src/TrackHub.Api/appsettings.json`); the test project uses
+EF Core's in-memory provider and runs on its own.
+
 ![TrackHub architecture](architecture-diagram.svg)
