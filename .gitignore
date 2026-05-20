@@ -1,0 +1,25 @@
+# .NET build outputs
+bin/
+obj/
+*.user
+*.suo
+.vs/
+.vscode/
+
+# IDE
+.idea/
+*.iml
+
+# Test outputs
+TestResults/
+[Cc]overage*/
+*.coverage
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local config and secrets
+*.env
+appsettings.Development.json
+appsettings.*.local.json
