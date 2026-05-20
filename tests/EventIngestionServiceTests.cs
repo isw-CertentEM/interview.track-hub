@@ -45,9 +45,13 @@ public class EventIngestionServiceTests
 
     private static IServiceProvider BuildContainer()
     {
+        // Compute the InMemory database name once and capture it in the
+        // closure so every scope's DbContext points at the same store.
+        var dbName = "test-" + Guid.NewGuid();
+
         var services = new ServiceCollection();
         services.AddDbContext<TrackHubDbContext>(opt =>
-            opt.UseInMemoryDatabase("test-" + Guid.NewGuid()));
+            opt.UseInMemoryDatabase(dbName));
 
         var sp = services.BuildServiceProvider();
 
