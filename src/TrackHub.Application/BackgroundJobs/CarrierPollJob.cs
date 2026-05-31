@@ -44,6 +44,11 @@ public interface ICarrierSftpClient
 {
     Task<IReadOnlyList<string>> ListNewFilesAsync(string carrierCode);
     Task<Stream> OpenAsync(string carrierCode, string fileName);
+
+    /// <summary>
+    /// Moves the file out of the carrier's inbox into the archive folder.
+    /// Subsequent calls to <see cref="ListNewFilesAsync"/> will not return it.
+    /// </summary>
     Task ArchiveAsync(string carrierCode, string fileName);
 }
 public interface ICarrierRegistry
