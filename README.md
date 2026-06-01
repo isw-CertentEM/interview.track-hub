@@ -60,4 +60,10 @@ Targets .NET 8. The application needs an Oracle instance to run end to end
 (see `src/TrackHub.Api/appsettings.json`); the test project uses
 EF Core's in-memory provider and runs on its own.
 
+## Architecture
+
 ![TrackHub architecture](architecture-diagram.svg)
+
+## Data model
+
+![TrackHub data model](data-model.svg)
