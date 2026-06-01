@@ -30,6 +30,9 @@ public class TrackingController : ControllerBase
     /// Webhook endpoint a carrier POSTs to. The {carrierCode} segment tells us
     /// which connector to use for the payload.
     /// </summary>
+    // Carriers don't present JWTs to us; they're external systems POSTing on
+    // their own schedules. The controller's class-level [Authorize] doesn't
+    // apply to this entry point.
     [HttpPost("/api/carriers/{carrierCode}/webhook")]
     [AllowAnonymous]
     public async Task<IActionResult> Webhook(string carrierCode)

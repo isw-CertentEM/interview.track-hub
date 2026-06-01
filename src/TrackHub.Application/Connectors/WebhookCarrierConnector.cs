@@ -13,7 +13,7 @@ public class WebhookCarrierConnector : ICarrierConnector
 
     public IEnumerable<ParsedEvent> Parse(Stream source)
     {
-        var doc = JsonDocument.Parse(source);
+        using var doc = JsonDocument.Parse(source);
         var root = doc.RootElement;
 
         yield return new ParsedEvent(
