@@ -1,0 +1,218 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="100%" height="100%">
+  <!-- Background -->
+  <rect width="1200" height="680" fill="#ffffff" />
+
+  <!-- Defs for Exact ERD Markers and Styling -->
+  <defs>
+    <!-- Shadow -->
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.1"/>
+    </filter>
+    
+    <style>
+      .rel { 
+        stroke: #64748b; 
+        stroke-width: 2; 
+        fill: none; 
+      }
+      .marker-path { stroke: #64748b; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+      .col-name { fill: #0f172a; }
+      .col-type { fill: #64748b; }
+      .tbl-bg { fill: #ffffff; stroke: #cbd5e1; stroke-width: 1.5; filter: url(#shadow); rx: 6; }
+      .tbl-hdr { fill: #334155; }
+      .tbl-title { fill: #ffffff; font-family: monospace; font-size: 14px; font-weight: bold; text-anchor: middle; }
+      .txt { font-family: monospace; font-size: 12px; }
+      .badge-txt { font-family: monospace; font-size: 10px; font-weight: bold; fill: #ffffff; text-anchor: middle; }
+      .divider { stroke: #e2e8f0; stroke-dasharray: 4; }
+    </style>
+
+    <!-- 
+      Static Markers explicitly set for userSpace without rotation (orient="0").
+      This completely fixes scaling & orientation clipping bugs caused by browsers reading Bezier tangents weirdly.
+    -->
+    
+    <!-- Path leaving left table. Table edge X=0, connects at X=24. markerWidth covers the gap explicitly. -->
+    <marker id="cross_out" viewBox="0 0 24 24" markerWidth="24" markerHeight="24" refX="24" refY="12" orient="0" markerUnits="userSpaceOnUse">
+      <path d="M 0 12 L 24 12 M 10 4 L 10 20" class="marker-path" />
+    </marker>
+
+    <!-- Path hitting right table. Table edge X=24, connects at X=0. markerWidth covers the gap explicitly. -->
+    <marker id="cross_in" viewBox="0 0 24 24" markerWidth="24" markerHeight="24" refX="0" refY="12" orient="0" markerUnits="userSpaceOnUse">
+      <path d="M 0 12 L 24 12 M 14 4 L 14 20" class="marker-path" />
+    </marker>
+
+    <!-- Path leaving left table. Table edge X=0. -->
+    <marker id="crow_out" viewBox="0 0 24 24" markerWidth="24" markerHeight="24" refX="24" refY="12" orient="0" markerUnits="userSpaceOnUse">
+      <path d="M 0 12 L 24 12 M 16 12 L 0 4 M 16 12 L 0 20" class="marker-path" />
+    </marker>
+
+    <!-- Path hitting right table. Table edge X=24. -->
+    <marker id="crow_in" viewBox="0 0 24 24" markerWidth="24" markerHeight="24" refX="0" refY="12" orient="0" markerUnits="userSpaceOnUse">
+      <path d="M 0 12 L 24 12 M 8 12 L 24 4 M 8 12 L 24 20" class="marker-path" />
+    </marker>
+  </defs>
+
+  <!-- Relationship Path Lines -->
+
+  <!-- 1. MERCHANTS (1) to SHIPMENTS (N) -->
+  <path d="M 374 110 C 390 110 390 110 406 110" class="rel" marker-start="url(#cross_out)" marker-end="url(#crow_in)" />
+  
+  <!-- 2. CARRIERS (1) to SHIPMENTS (N) -->
+  <path d="M 374 300 C 390 300 390 170 406 170" class="rel" marker-start="url(#cross_out)" marker-end="url(#crow_in)" />
+  
+  <!-- 3. CARRIERS (1) to EVENT_BATCHES (N) -->
+  <path d="M 374 320 C 390 320 390 420 406 420" class="rel" marker-start="url(#cross_out)" marker-end="url(#crow_in)" />
+  
+  <!-- 4. SHIPMENTS (1) to TRACKING_EVENTS (N) -->
+  <path d="M 754 110 C 770 110 770 110 786 110" class="rel" marker-start="url(#cross_out)" marker-end="url(#crow_in)" />
+  
+  <!-- 5. EVENT_OUTBOX (1) to SHIPMENTS (N) -->
+  <path d="M 754 230 C 770 230 770 450 786 450" class="rel" marker-start="url(#crow_out)" marker-end="url(#cross_in)" />
+  
+  <!-- 6. EVENT_OUTBOX (1) to TRACKING_EVENTS (N)  (Loop connecting right edge (N) to right edge (1)) -->
+  <path d="M 1134 150 C 1210 150 1210 450 1134 450" class="rel" marker-start="url(#crow_out)" marker-end="url(#cross_out)" />
+
+
+  <!-- Tables Layout -->
+
+  <!-- ======================== Column 1 ======================== -->
+
+  <!-- MERCHANTS -->
+  <g transform="translate(50,50)">
+    <rect width="300" height="125" class="tbl-bg" />
+    <path d="M 0 6 Q 0 0 6 0 L 294 0 Q 300 0 300 6 L 300 35 L 0 35 Z" class="tbl-hdr" />
+    <text x="150" y="23" class="tbl-title">MERCHANTS</text>
+    
+    <rect x="15" y="45" width="24" height="16" rx="4" fill="#0ea5e9" /><text x="27" y="57" class="badge-txt">PK</text>
+    <text x="48" y="57" class="txt"><tspan class="col-name">merchant_id</tspan> <tspan class="col-type">: NUMBER</tspan></text>
+    
+    <text x="48" y="77" class="txt"><tspan class="col-name">name</tspan> <tspan class="col-type">: VARCHAR2(200)</tspan></text>
+    
+    <rect x="15" y="85" width="24" height="16" rx="4" fill="#f59e0b" /><text x="27" y="97" class="badge-txt">UQ</text>
+    <text x="48" y="97" class="txt"><tspan class="col-name">api_key</tspan> <tspan class="col-type">: VARCHAR2(64)</tspan></text>
+
+    <text x="48" y="117" class="txt"><tspan class="col-name">is_active</tspan> <tspan class="col-type">: NUMBER(1)</tspan></text>
+  </g>
+
+  <!-- CARRIERS -->
+  <g transform="translate(50,250)">
+    <rect width="300" height="105" class="tbl-bg" />
+    <path d="M 0 6 Q 0 0 6 0 L 294 0 Q 300 0 300 6 L 300 35 L 0 35 Z" class="tbl-hdr" />
+    <text x="150" y="23" class="tbl-title">CARRIERS</text>
+    
+    <rect x="15" y="45" width="24" height="16" rx="4" fill="#0ea5e9" /><text x="27" y="57" class="badge-txt">PK</text>
+    <text x="48" y="57" class="txt"><tspan class="col-name">carrier_id</tspan> <tspan class="col-type">: NUMBER</tspan></text>
+    
+    <rect x="15" y="65" width="24" height="16" rx="4" fill="#f59e0b" /><text x="27" y="77" class="badge-txt">UQ</text>
+    <text x="48" y="77" class="txt"><tspan class="col-name">code</tspan> <tspan class="col-type">: VARCHAR2(10)</tspan></text>
+    
+    <text x="48" y="97" class="txt"><tspan class="col-name">name</tspan> <tspan class="col-type">: VARCHAR2(200)</tspan></text>
+  </g>
+
+  <!-- ======================== Column 2 ======================== -->
+
+  <!-- SHIPMENTS -->
+  <g transform="translate(430,50)">
+    <rect width="300" height="255" class="tbl-bg" />
+    <path d="M 0 6 Q 0 0 6 0 L 294 0 Q 300 0 300 6 L 300 35 L 0 35 Z" class="tbl-hdr" />
+    <text x="150" y="23" class="tbl-title">SHIPMENTS</text>
+    
+    <rect x="15" y="45" width="24" height="16" rx="4" fill="#0ea5e9" /><text x="27" y="57" class="badge-txt">PK</text>
+    <text x="48" y="57" class="txt"><tspan class="col-name">shipment_id</tspan> <tspan class="col-type">: NUMBER</tspan></text>
+    
+    <rect x="15" y="65" width="24" height="16" rx="4" fill="#a855f7" /><text x="27" y="77" class="badge-txt">FK</text>
+    <text x="48" y="77" class="txt"><tspan class="col-name">merchant_id</tspan> <tspan class="col-type">: NUMBER</tspan></text>
+    
+    <rect x="15" y="85" width="24" height="16" rx="4" fill="#a855f7" /><text x="27" y="97" class="badge-txt">FK</text>
+    <text x="48" y="97" class="txt"><tspan class="col-name">carrier_id</tspan> <tspan class="col-type">: NUMBER</tspan></text>
+    
+    <text x="48" y="117" class="txt"><tspan class="col-name">tracking_number</tspan> <tspan class="col-type">: VARCHAR2(40)</tspan></text>
+    <text x="48" y="137" class="txt"><tspan class="col-name">current_status</tspan> <tspan class="col-type">: VARCHAR2(20)</tspan></text>
+    <text x="48" y="157" class="txt"><tspan class="col-name">current_location_code</tspan> <tspan class="col-type">: VARCHAR2(20)</tspan></text>
+    <text x="48" y="177" class="txt"><tspan class="col-name">last_event_at</tspan> <tspan class="col-type">: TIMESTAMP</tspan></text>
+    <text x="48" y="197" class="txt"><tspan class="col-name">created_at</tspan> <tspan class="col-type">: TIMESTAMP</tspan></text>
+
+    <!-- Constraints Section -->
+    <line x1="0" y1="205" x2="300" y2="205" class="divider" />
+    
+    <rect x="15" y="210" width="24" height="16" rx="4" fill="#f59e0b" /><text x="27" y="222" class="badge-txt">UQ</text>
+    <text x="48" y="222" class="txt"><tspan class="col-name">(carrier_id, tracking_number)</tspan></text>
+    
+    <rect x="15" y="230" width="24" height="16" rx="4" fill="#10b981" /><text x="27" y="242" class="badge-txt">IX</text>
+    <text x="48" y="242" class="txt"><tspan class="col-name">(merchant_id, current_status)</tspan></text>
+  </g>
+
+  <!-- EVENT_BATCHES -->
+  <g transform="translate(430,380)">
+    <rect width="300" height="185" class="tbl-bg" />
+    <path d="M 0 6 Q 0 0 6 0 L 294 0 Q 300 0 300 6 L 300 35 L 0 35 Z" class="tbl-hdr" />
+    <text x="150" y="23" class="tbl-title">EVENT_BATCHES</text>
+    
+    <rect x="15" y="45" width="24" height="16" rx="4" fill="#0ea5e9" /><text x="27" y="57" class="badge-txt">PK</text>
+    <text x="48" y="57" class="txt"><tspan class="col-name">batch_id</tspan> <tspan class="col-type">: NUMBER</tspan></text>
+    
+    <rect x="15" y="65" width="24" height="16" rx="4" fill="#a855f7" /><text x="27" y="77" class="badge-txt">FK</text>
+    <text x="48" y="77" class="txt"><tspan class="col-name">carrier_id</tspan> <tspan class="col-type">: NUMBER</tspan></text>
+    
+    <text x="48" y="97" class="txt"><tspan class="col-name">source_file_hash</tspan> <tspan class="col-type">: VARCHAR2(64)</tspan></text>
+    <text x="48" y="117" class="txt"><tspan class="col-name">received_at</tspan> <tspan class="col-type">: TIMESTAMP</tspan></text>
+    <text x="48" y="137" class="txt"><tspan class="col-name">processed_at</tspan> <tspan class="col-type">: TIMESTAMP</tspan></text>
+    <text x="48" y="157" class="txt"><tspan class="col-name">row_count</tspan> <tspan class="col-type">: NUMBER</tspan></text>
+    <text x="48" y="177" class="txt"><tspan class="col-name">error_message</tspan> <tspan class="col-type">: VARCHAR2(4000)</tspan></text>
+  </g>
+
+  <!-- ======================== Column 3 ======================== -->
+  
+  <!-- TRACKING_EVENTS -->
+  <g transform="translate(810,50)">
+    <rect width="300" height="215" class="tbl-bg" />
+    <path d="M 0 6 Q 0 0 6 0 L 294 0 Q 300 0 300 6 L 300 35 L 0 35 Z" class="tbl-hdr" />
+    <text x="150" y="23" class="tbl-title">TRACKING_EVENTS</text>
+    
+    <rect x="15" y="45" width="24" height="16" rx="4" fill="#0ea5e9" /><text x="27" y="57" class="badge-txt">PK</text>
+    <text x="48" y="57" class="txt"><tspan class="col-name">event_id</tspan> <tspan class="col-type">: NUMBER</tspan></text>
+    
+    <rect x="15" y="65" width="24" height="16" rx="4" fill="#a855f7" /><text x="27" y="77" class="badge-txt">FK</text>
+    <text x="48" y="77" class="txt"><tspan class="col-name">shipment_id</tspan> <tspan class="col-type">: NUMBER</tspan></text>
+    
+    <text x="48" y="97" class="txt"><tspan class="col-name">carrier_event_id</tspan> <tspan class="col-type">: VARCHAR2(80)</tspan></text>
+    <text x="48" y="117" class="txt"><tspan class="col-name">event_time</tspan> <tspan class="col-type">: TIMESTAMP</tspan></text>
+    <text x="48" y="137" class="txt"><tspan class="col-name">status_code</tspan> <tspan class="col-type">: VARCHAR2(20)</tspan></text>
+    <text x="48" y="157" class="txt"><tspan class="col-name">location_code</tspan> <tspan class="col-type">: VARCHAR2(20)</tspan></text>
+    <text x="48" y="177" class="txt"><tspan class="col-name">received_at</tspan> <tspan class="col-type">: TIMESTAMP</tspan></text>
+
+    <!-- Constraints Section -->
+    <line x1="0" y1="185" x2="300" y2="185" class="divider" />
+    
+    <rect x="15" y="190" width="24" height="16" rx="4" fill="#10b981" /><text x="27" y="202" class="badge-txt">IX</text>
+    <text x="48" y="202" class="txt"><tspan class="col-name">(shipment_id, event_time)</tspan></text>
+  </g>
+
+  <!-- EVENT_OUTBOX -->
+  <g transform="translate(810,380)">
+    <rect width="300" height="235" class="tbl-bg" />
+    <path d="M 0 6 Q 0 0 6 0 L 294 0 Q 300 0 300 6 L 300 35 L 0 35 Z" class="tbl-hdr" />
+    <text x="150" y="23" class="tbl-title">EVENT_OUTBOX</text>
+    
+    <rect x="15" y="45" width="24" height="16" rx="4" fill="#0ea5e9" /><text x="27" y="57" class="badge-txt">PK</text>
+    <text x="48" y="57" class="txt"><tspan class="col-name">outbox_id</tspan> <tspan class="col-type">: NUMBER</tspan></text>
+    
+    <rect x="15" y="65" width="24" height="16" rx="4" fill="#a855f7" /><text x="27" y="77" class="badge-txt">FK</text>
+    <text x="48" y="77" class="txt"><tspan class="col-name">event_id</tspan> <tspan class="col-type">: NUMBER</tspan></text>
+    
+    <rect x="15" y="85" width="24" height="16" rx="4" fill="#a855f7" /><text x="27" y="97" class="badge-txt">FK</text>
+    <text x="48" y="97" class="txt"><tspan class="col-name">shipment_id</tspan> <tspan class="col-type">: NUMBER</tspan></text>
+    
+    <text x="48" y="117" class="txt"><tspan class="col-name">destination</tspan> <tspan class="col-type">: VARCHAR2(200)</tspan></text>
+    <text x="48" y="137" class="txt"><tspan class="col-name">payload</tspan> <tspan class="col-type">: CLOB</tspan></text>
+    <text x="48" y="157" class="txt"><tspan class="col-name">status</tspan> <tspan class="col-type">: VARCHAR2(20)</tspan></text>
+    <text x="48" y="177" class="txt"><tspan class="col-name">created_at</tspan> <tspan class="col-type">: TIMESTAMP</tspan></text>
+    <text x="48" y="197" class="txt"><tspan class="col-name">dispatched_at</tspan> <tspan class="col-type">: TIMESTAMP</tspan></text>
+    
+    <!-- Constraints Section -->
+    <line x1="0" y1="205" x2="300" y2="205" class="divider" />
+    
+    <rect x="15" y="210" width="24" height="16" rx="4" fill="#10b981" /><text x="27" y="222" class="badge-txt">IX</text>
+    <text x="48" y="222" class="txt"><tspan class="col-name">(status, created_at)</tspan></text>
+  </g>
+</svg>
