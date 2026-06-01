@@ -1,6 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 680" width="100%" height="100%">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1120 620" width="100%" height="100%">
   <!-- Background -->
-  <rect width="1200" height="680" fill="#ffffff" />
+  <rect width="1120" height="620" fill="#ffffff" />
 
   <!-- Defs for Exact ERD Markers and Styling -->
   <defs>
@@ -55,22 +55,22 @@
   <!-- Relationship Path Lines -->
 
   <!-- 1. MERCHANTS (1) to SHIPMENTS (N) -->
-  <path d="M 374 110 C 390 110 390 110 406 110" class="rel" marker-start="url(#cross_out)" marker-end="url(#crow_in)" />
+  <path d="M 284 110 C 300 110 300 110 316 110" class="rel" marker-start="url(#cross_out)" marker-end="url(#crow_in)" />
   
   <!-- 2. CARRIERS (1) to SHIPMENTS (N) -->
-  <path d="M 374 300 C 390 300 390 170 406 170" class="rel" marker-start="url(#cross_out)" marker-end="url(#crow_in)" />
+  <path d="M 284 270 C 300 270 300 170 316 170" class="rel" marker-start="url(#cross_out)" marker-end="url(#crow_in)" />
   
   <!-- 3. CARRIERS (1) to EVENT_BATCHES (N) -->
-  <path d="M 374 320 C 390 320 390 420 406 420" class="rel" marker-start="url(#cross_out)" marker-end="url(#crow_in)" />
+  <path d="M 284 340 C 300 340 300 420 316 420" class="rel" marker-start="url(#cross_out)" marker-end="url(#crow_in)" />
   
   <!-- 4. SHIPMENTS (1) to TRACKING_EVENTS (N) -->
-  <path d="M 754 110 C 770 110 770 110 786 110" class="rel" marker-start="url(#cross_out)" marker-end="url(#crow_in)" />
+  <path d="M 664 110 C 680 110 680 110 696 110" class="rel" marker-start="url(#cross_out)" marker-end="url(#crow_in)" />
   
-  <!-- 5. EVENT_OUTBOX (1) to SHIPMENTS (N) -->
-  <path d="M 754 230 C 770 230 770 450 786 450" class="rel" marker-start="url(#crow_out)" marker-end="url(#cross_in)" />
+  <!-- 5. EVENT_OUTBOX (N) to SHIPMENTS (1) -->
+  <path d="M 664 230 C 680 230 680 450 696 450" class="rel" marker-start="url(#cross_out)" marker-end="url(#crow_in)" />
   
-  <!-- 6. EVENT_OUTBOX (1) to TRACKING_EVENTS (N)  (Loop connecting right edge (N) to right edge (1)) -->
-  <path d="M 1134 150 C 1210 150 1210 450 1134 450" class="rel" marker-start="url(#crow_out)" marker-end="url(#cross_out)" />
+  <!-- 6. EVENT_OUTBOX (1) to TRACKING_EVENTS (1)  (Loop connecting right edge to right edge) -->
+  <path d="M 1014 150 C 1090 150 1090 450 1014 450" class="rel" marker-start="url(#cross_out)" marker-end="url(#cross_out)" />
 
 
   <!-- Tables Layout -->
@@ -79,9 +79,9 @@
 
   <!-- MERCHANTS -->
   <g transform="translate(50,50)">
-    <rect width="300" height="125" class="tbl-bg" />
-    <path d="M 0 6 Q 0 0 6 0 L 294 0 Q 300 0 300 6 L 300 35 L 0 35 Z" class="tbl-hdr" />
-    <text x="150" y="23" class="tbl-title">MERCHANTS</text>
+    <rect width="210" height="125" class="tbl-bg" />
+    <path d="M 0 6 Q 0 0 6 0 L 204 0 Q 210 0 210 6 L 210 35 L 0 35 Z" class="tbl-hdr" />
+    <text x="105" y="23" class="tbl-title">MERCHANTS</text>
     
     <rect x="15" y="45" width="24" height="16" rx="4" fill="#0ea5e9" /><text x="27" y="57" class="badge-txt">PK</text>
     <text x="48" y="57" class="txt"><tspan class="col-name">merchant_id</tspan> <tspan class="col-type">: NUMBER</tspan></text>
@@ -96,9 +96,9 @@
 
   <!-- CARRIERS -->
   <g transform="translate(50,250)">
-    <rect width="300" height="105" class="tbl-bg" />
-    <path d="M 0 6 Q 0 0 6 0 L 294 0 Q 300 0 300 6 L 300 35 L 0 35 Z" class="tbl-hdr" />
-    <text x="150" y="23" class="tbl-title">CARRIERS</text>
+    <rect width="210" height="105" class="tbl-bg" />
+    <path d="M 0 6 Q 0 0 6 0 L 204 0 Q 210 0 210 6 L 210 35 L 0 35 Z" class="tbl-hdr" />
+    <text x="105" y="23" class="tbl-title">CARRIERS</text>
     
     <rect x="15" y="45" width="24" height="16" rx="4" fill="#0ea5e9" /><text x="27" y="57" class="badge-txt">PK</text>
     <text x="48" y="57" class="txt"><tspan class="col-name">carrier_id</tspan> <tspan class="col-type">: NUMBER</tspan></text>
@@ -112,7 +112,7 @@
   <!-- ======================== Column 2 ======================== -->
 
   <!-- SHIPMENTS -->
-  <g transform="translate(430,50)">
+  <g transform="translate(340,50)">
     <rect width="300" height="255" class="tbl-bg" />
     <path d="M 0 6 Q 0 0 6 0 L 294 0 Q 300 0 300 6 L 300 35 L 0 35 Z" class="tbl-hdr" />
     <text x="150" y="23" class="tbl-title">SHIPMENTS</text>
@@ -143,7 +143,7 @@
   </g>
 
   <!-- EVENT_BATCHES -->
-  <g transform="translate(430,380)">
+  <g transform="translate(340,380)">
     <rect width="300" height="185" class="tbl-bg" />
     <path d="M 0 6 Q 0 0 6 0 L 294 0 Q 300 0 300 6 L 300 35 L 0 35 Z" class="tbl-hdr" />
     <text x="150" y="23" class="tbl-title">EVENT_BATCHES</text>
@@ -164,13 +164,10 @@
   <!-- ======================== Column 3 ======================== -->
   
   <!-- TRACKING_EVENTS -->
-  <g transform="translate(810,50)">
-    <rect width="300" height="215" class="tbl-bg" />
-    <path d="M 0 6 Q 0 0 6 0 L 294 0 Q 300 0 300 6 L 300 35 L 0 35 Z" class="tbl-hdr" />
-    <text x="150" y="23" class="tbl-title">TRACKING_EVENTS</text>
-    
-    <rect x="15" y="45" width="24" height="16" rx="4" fill="#0ea5e9" /><text x="27" y="57" class="badge-txt">PK</text>
-    <text x="48" y="57" class="txt"><tspan class="col-name">event_id</tspan> <tspan class="col-type">: NUMBER</tspan></text>
+  <g transform="translate(720,50)">
+    <rect width="270" height="215" class="tbl-bg" />
+    <path d="M 0 6 Q 0 0 6 0 L 264 0 Q 270 0 270 6 L 270 35 L 0 35 Z" class="tbl-hdr" />
+    <text x="135" y="23" class="tbl-title">TRACKING_EVENTS</text>
     
     <rect x="15" y="65" width="24" height="16" rx="4" fill="#a855f7" /><text x="27" y="77" class="badge-txt">FK</text>
     <text x="48" y="77" class="txt"><tspan class="col-name">shipment_id</tspan> <tspan class="col-type">: NUMBER</tspan></text>
@@ -182,17 +179,17 @@
     <text x="48" y="177" class="txt"><tspan class="col-name">received_at</tspan> <tspan class="col-type">: TIMESTAMP</tspan></text>
 
     <!-- Constraints Section -->
-    <line x1="0" y1="185" x2="300" y2="185" class="divider" />
+    <line x1="0" y1="185" x2="270" y2="185" class="divider" />
     
     <rect x="15" y="190" width="24" height="16" rx="4" fill="#10b981" /><text x="27" y="202" class="badge-txt">IX</text>
     <text x="48" y="202" class="txt"><tspan class="col-name">(shipment_id, event_time)</tspan></text>
   </g>
 
   <!-- EVENT_OUTBOX -->
-  <g transform="translate(810,380)">
-    <rect width="300" height="235" class="tbl-bg" />
-    <path d="M 0 6 Q 0 0 6 0 L 294 0 Q 300 0 300 6 L 300 35 L 0 35 Z" class="tbl-hdr" />
-    <text x="150" y="23" class="tbl-title">EVENT_OUTBOX</text>
+  <g transform="translate(720,380)">
+    <rect width="270" height="235" class="tbl-bg" />
+    <path d="M 0 6 Q 0 0 6 0 L 264 0 Q 270 0 270 6 L 270 35 L 0 35 Z" class="tbl-hdr" />
+    <text x="135" y="23" class="tbl-title">EVENT_OUTBOX</text>
     
     <rect x="15" y="45" width="24" height="16" rx="4" fill="#0ea5e9" /><text x="27" y="57" class="badge-txt">PK</text>
     <text x="48" y="57" class="txt"><tspan class="col-name">outbox_id</tspan> <tspan class="col-type">: NUMBER</tspan></text>
@@ -210,7 +207,7 @@
     <text x="48" y="197" class="txt"><tspan class="col-name">dispatched_at</tspan> <tspan class="col-type">: TIMESTAMP</tspan></text>
     
     <!-- Constraints Section -->
-    <line x1="0" y1="205" x2="300" y2="205" class="divider" />
+    <line x1="0" y1="205" x2="270" y2="205" class="divider" />
     
     <rect x="15" y="210" width="24" height="16" rx="4" fill="#10b981" /><text x="27" y="222" class="badge-txt">IX</text>
     <text x="48" y="222" class="txt"><tspan class="col-name">(status, created_at)</tspan></text>
