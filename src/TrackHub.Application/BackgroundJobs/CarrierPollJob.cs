@@ -28,7 +28,7 @@ public class CarrierPollJob
     {
         foreach (var carrier in _carriers.GetActive())
         {
-            var files = await _sftp.ListNewFilesAsync(carrier.Code);
+            var files = await _sftp.ListIncomingFilesAsync(carrier.Code);
             foreach (var file in files)
             {
                 using var stream = await _sftp.OpenAsync(carrier.Code, file);
@@ -42,12 +42,18 @@ public class CarrierPollJob
 // Stub interfaces so the file compiles standalone — implementations are elsewhere.
 public interface ICarrierSftpClient
 {
-    Task<IReadOnlyList<string>> ListNewFilesAsync(string carrierCode);
+    /// <summary>
+    /// Lists the names of files currently present in the carrier's
+    /// incoming-files directory on the SFTP server.
+    /// </summary>
+    Task<IReadOnlyList<string>> ListIncomingFilesAsync(string carrierCode);
+
     Task<Stream> OpenAsync(string carrierCode, string fileName);
 
     /// <summary>
-    /// Moves the file out of the carrier's inbox into the archive folder.
-    /// Subsequent calls to <see cref="ListNewFilesAsync"/> will not return it.
+    /// Moves the file out of the carrier's incoming-files directory into
+    /// the archive folder. Subsequent calls to
+    /// <see cref="ListIncomingFilesAsync"/> will not return it.
     /// </summary>
     Task ArchiveAsync(string carrierCode, string fileName);
 }
