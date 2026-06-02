@@ -47,6 +47,9 @@ CREATE TABLE tracking_events (
 
 CREATE INDEX ix_events_shipment_time ON tracking_events(shipment_id, event_time);
 
+-- Each row is one atomic ingestion attempt against a carrier file.
+-- Successful batches have processed_at and row_count set; failed batches
+-- roll back, leaving them NULL, and record the reason in error_message.
 CREATE TABLE event_batches (
     batch_id         NUMBER         PRIMARY KEY,
     carrier_id       NUMBER         NOT NULL,

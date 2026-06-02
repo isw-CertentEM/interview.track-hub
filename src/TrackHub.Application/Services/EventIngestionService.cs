@@ -25,6 +25,11 @@ public class EventIngestionService
         _connectors = connectors;
     }
 
+    /// <summary>
+    /// Ingests one batch of events from a carrier payload. Each call is one
+    /// atomic batch: every event in the payload lands or none do, so a
+    /// failed batch can be re-delivered and reprocessed safely.
+    /// </summary>
     public async Task IngestAsync(string carrierCode, Stream payload)
     {
         var carrier = _db.Carriers.First(c => c.Code == carrierCode);
