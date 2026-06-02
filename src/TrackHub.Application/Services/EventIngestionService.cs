@@ -35,6 +35,9 @@ public class EventIngestionService
         var carrier = _db.Carriers.First(c => c.Code == carrierCode);
         var connector = _connectors.For(carrierCode);
 
+        // Atomic batch: if any event fails, roll the whole thing back.
+        await using var tx = await _db.Database.BeginTransactionAsync();
+
         int rows = 0;
         foreach (var ev in connector.Parse(payload))
         {
@@ -55,6 +58,12 @@ public class EventIngestionService
                 new Oracle.ManagedDataAccess.Client.OracleParameter("p_location", ev.LocationCode ?? (object)DBNull.Value),
                 p_result);
 
+            if ((p_result.Value as string)?.StartsWith("ERROR", StringComparison.Ordinal) == true)
+            {
+                await tx.RollbackAsync();
+                throw new InvalidOperationException($"Event ingestion failed: {p_result.Value}");
+            }
+
             rows++;
         }
 
@@ -68,5 +77,7 @@ public class EventIngestionService
         };
         _db.EventBatches.Add(batch);
         await _db.SaveChangesAsync();
+
+        await tx.CommitAsync();
     }
 }
