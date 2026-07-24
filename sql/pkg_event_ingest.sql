@@ -1,8 +1,36 @@
--- TrackHub: PL/SQL package body for ingesting tracking events.
+-- TrackHub: PL/SQL package for ingesting tracking events.
 -- Called from C# (EventIngestionService) once per parsed event.
+
+CREATE OR REPLACE PACKAGE pkg_event_ingest AS
+
+    -- Called by the C# ingestion service once per parsed tracking event.
+    -- Records the event if new, then rolls the shipment's current status
+    -- forward to reflect it.
+    PROCEDURE record_event(
+        p_carrier_id       IN  carriers.carrier_id%TYPE,
+        p_tracking_number  IN  shipments.tracking_number%TYPE,
+        p_carrier_event_id IN  tracking_events.carrier_event_id%TYPE,
+        p_event_time       IN  TIMESTAMP,
+        p_status_code      IN  VARCHAR2,
+        p_location_code    IN  VARCHAR2,
+        p_result           OUT VARCHAR2
+    );
+
+    -- Called by the C# ingestion service when a batch fails partway through.
+    -- Durably records the failure on the batch row so operations can see it.
+    PROCEDURE mark_batch_failed(
+        p_batch_id      IN event_batches.batch_id%TYPE,
+        p_error_message IN VARCHAR2
+    );
+
+END pkg_event_ingest;
+/
 
 CREATE OR REPLACE PACKAGE BODY pkg_event_ingest AS
 
+    -- Called by the C# ingestion service once per parsed tracking event.
+    -- Records the event if new, then rolls the shipment's current status
+    -- forward to reflect it.
     PROCEDURE record_event(
         p_carrier_id       IN  carriers.carrier_id%TYPE,
         p_tracking_number  IN  shipments.tracking_number%TYPE,

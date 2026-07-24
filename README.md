@@ -29,7 +29,7 @@ src/
   TrackHub.Api/            Controllers, Program.cs
 sql/
   schema.sql               Oracle DDL
-  pkg_event_ingest.pkb     PL/SQL package
+  pkg_event_ingest.sql     PL/SQL package
   reports.sql              Reporting query used by the dashboard
 sample-data/
   upsx-events-2026-05-18.csv   Example UPSX daily file
